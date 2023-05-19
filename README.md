@@ -1,4 +1,4 @@
-# qrcode_dynamic_link
+# qr_code_app
 
 A new Flutter project.
 
