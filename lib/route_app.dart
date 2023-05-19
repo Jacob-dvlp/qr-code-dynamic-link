@@ -1,9 +1,10 @@
 
+import 'package:deep_link/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../home_app.dart';
-import '../product.dart';
+import 'home_page.dart';
+
 
 class RouteServices {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {

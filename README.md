@@ -1,4 +1,4 @@
-# qr_code_app
+# deep_link
 
 A new Flutter project.
 

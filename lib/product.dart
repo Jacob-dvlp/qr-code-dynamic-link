@@ -7,10 +7,14 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Dynamic Link  "),
+        centerTitle: true,
+      ),
       body: Center(
         child: Text(
-          "Product Id:- $productId",
-          style: Theme.of(context).textTheme.headline6,
+          "Producto",
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );
