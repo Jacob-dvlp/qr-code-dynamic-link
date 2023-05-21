@@ -1,3 +1,4 @@
+import 'package:deep_link/firebase_dynamic.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -11,4 +12,5 @@ Future<void> main() async {
 Future init() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseDynamic().init();
 }

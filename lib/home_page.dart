@@ -27,7 +27,8 @@ class _HomeAppState extends State<HomeApp> {
     dynamicLinks.onLink.listen((dynamicLinkData) {
       final Uri uri = dynamicLinkData.link;
       final queryParams = uri.queryParameters;
-      if (queryParams.isEmpty) {
+      print(queryParams);
+      if (queryParams.isNotEmpty) {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -52,7 +53,7 @@ class _HomeAppState extends State<HomeApp> {
 
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: kUriPrefix,
-      link: Uri.parse(kUriPrefix),
+      link: Uri.parse("https://deepdynamicappflutter.page.link?ref=$link"),
       androidParameters: const AndroidParameters(
         packageName: 'com.example.deep_link',
         minimumVersion: 0,
@@ -60,13 +61,9 @@ class _HomeAppState extends State<HomeApp> {
     );
 
     Uri url;
-    if (short) {
-      final ShortDynamicLink shortLink =
-          await dynamicLinks.buildShortLink(parameters);
-      url = shortLink.shortUrl;
-    } else {
-      url = await dynamicLinks.buildLink(parameters);
-    }
+    url = await dynamicLinks.buildLink(parameters);
+
+    print(url.data);
 
     setState(() {
       linkMessage = url.toString();
@@ -126,6 +123,6 @@ class _HomeAppState extends State<HomeApp> {
   }
 }
 
-const String kUriPrefix = 'https://deeplinkteste.page.link';
+const String kUriPrefix = 'https://deepdynamicappflutter.page.link';
 const String kHomepageLink = '/homepage';
 const String kProductpageLink = '/homepage';
