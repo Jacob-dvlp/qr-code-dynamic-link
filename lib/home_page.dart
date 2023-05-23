@@ -1,3 +1,4 @@
+import 'package:deep_link/firebase_dynamic_link.dart';
 import 'package:deep_link/product.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,10 @@ String? linkMessage;
   bool isCreatingLink = false;
 List<Post> posts = [];
 
-  late FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
   @override
   void initState() {
     super.initState();
-    initDynamicLinks();
     getPost();
   }
 
@@ -39,48 +38,9 @@ List<Post> posts = [];
     }
   } 
 
-   initDynamicLinks()  {
-    dynamicLinks.onLink.listen((dynamicLinkData) {
-      final Uri uri = dynamicLinkData.link;
-      final queryParams = uri.queryParameters;
-      final id = queryParams["param"];
-     
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProductPage(productId: id!),
-            ));
-      
-    }).onError((error) {
-      print('onLink error');
-      print(error.message);
-    });
-  }
 
-  Future<void> _createDynamicLink(bool short, String link, String id) async {
-    setState(() {
-      isCreatingLink = true;
-    });
 
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: kUriPrefix,
-      link: Uri.parse(
-          "https://deepdynamicappflutter.page.link?param=$link&param=$id"),
-      androidParameters: const AndroidParameters(
-        packageName: 'com.example.deep_link',
-        minimumVersion: 0,
-      ),
-    );
-
-    Uri url;
-    url = await dynamicLinks.buildLink(parameters);
-
-    print(dynamicLinks.buildShortLink(parameters).then((value) => print(value.shortUrl)));
-    setState(() {
-      linkMessage = url.toString();
-      isCreatingLink = false;
-    });
-  }
+  
 
   
   @override
@@ -101,7 +61,7 @@ List<Post> posts = [];
                 title: Text(post.title),
                 trailing: InkWell(
                 onTap: () async {
-                      _createDynamicLink(
+                      FirebaseDynamicLinkInit().createDynamicLink(
                           true, kHomepageLink, post.id.toString());
                   if (linkMessage != null) {
                         await launch(linkMessage!);
@@ -129,7 +89,7 @@ List<Post> posts = [];
 
 
 const String kUriPrefix = 'https://deepdynamicappflutter.page.link';
-const String kHomepageLink = '/homepage';
+const String kHomepageLink = '/productpage';
 const String kProductpageLink = '/homepage';
 
 
